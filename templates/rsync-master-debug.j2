@@ -1,0 +1,44 @@
+#!/bin/bash
+
+cd /home/centos-scripts
+SYNCTIME=`date +%Y%m%d%H%M`
+lockfile="/home/centos-scripts/rsync-debug.pid"
+running="yes"
+
+do_rsync() {
+
+rsync --force --partial --exclude ".~tmp~"  --exclude FOOTER.html --delay-updates --delete -avzH $1::centos-full-debuginfo/ {{ debuginfo_local_path }}  > /home/centos-scripts/$SYNCTIME.debug.log 2>&1 
+
+for log in `ls *.debug.log `
+  do
+   if [ "$log" != "$SYNCTIME.debug.log" ]; then
+    rm -f $log
+   fi
+  done
+
+}
+
+if [ -z $1 ]; then 
+  echo "need a machine name to rsync from as the first param to this script"
+  exit 1
+fi
+
+if [ ! -e ${lockfile} ]; then
+   trap 'rm -f "$lockfile"; exit $?' INT TERM EXIT
+   echo "$$" > $lockfile
+   do_rsync $1 
+
+   rm -f "$lockfile"
+   trap - INT TERM EXIT
+else
+   proc=$(cat ${lockfile})
+   if [ $(ps -eopid | grep -c $proc) -eq 1 ]; then
+     #still running
+     echo "Old process still running"
+     exit 27
+   else
+     #old process dead
+     rm -f ${lockfile}
+   fi
+fi
+

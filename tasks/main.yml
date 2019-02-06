@@ -1,0 +1,38 @@
+- include_tasks: mirror-user.yml
+
+- import_role:
+    name: httpd
+
+- name: Adding vhost file
+  template:
+    src: 80_debuginfo.conf.j2
+    dest: /etc/httpd/conf.d/80_debuginfo.conf
+  notify:
+    - restart_httpd
+ 
+- name: Ensuring some selinux booleans are enabled
+  seboolean:
+    name: "{{ item }}"
+    persistent: yes
+    state: yes
+  with_items:
+    - httpd_enable_homedirs
+    - httpd_read_user_content
+
+- name: Script to gather mirror content
+  template:
+    src: rsync-master-debug.j2
+    dest: "/home/{{ debuginfo_local_user }}-scripts/rsync-master-debug"
+    mode: 0755
+
+- name: Cron job to rsync content from upstream node
+  cron:
+    name: "CentOS Debuginfo mirror rsync job"
+    job: "/home/{{ debuginfo_local_user }}-scripts/rsync-master-debuginfo {{ debuginfo_rsync_from }} > /dev/null 2>&1"
+    minute: "*/12"
+    user: "{{ debuginfo_local_user }}"
+
+- include_tasks: rsyncd.yml
+  when: debuginfo_rsyncd
+
+- include_tasks: monitoring.yml  

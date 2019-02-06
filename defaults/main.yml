@@ -1,0 +1,33 @@
+# default variables for mirror-debuginfo role
+
+# Full rsync path::module to use to rsync centos mirror content from
+debuginfo_rsync_from: node1.centos.org
+debuginfo_rsync_from_module: centos-full-debuginfo
+debuginfo_rsync_from_fallback: node0.centos.org
+
+# default path where to sync content to
+debuginfo_local_path: /home/centos-debuginfo/
+
+# Default user owning all the files
+debuginfo_local_user: centos
+
+# Do we also want to become member of the debuginfo network
+# So opening up rsyncd to oustide world to let them sync from us 
+debuginfo_rsyncd: True
+
+# We'll parse inventory to allow some IPs based on hostgroup-role-mirror-debuginfo vars
+# But we can also add other ones (outside of ansible for example)
+debuginfo_rsyncd_allow_from:
+  - 192.168.1.1
+  - 172.16.31.230
+
+# using mod_ratelimit on httpd to limit bw usage?
+debuginfo_httpd_mod_ratelimit: False
+debuginfo_httpd_rate_limit: 1536
+
+
+# Zabbix/monitoring part
+debuginfo_zabbix_templates:
+  - Template CentOS Debuginfo server
+debuginfo_zabbix_groups:
+  - CentOS Debuginfo Servers

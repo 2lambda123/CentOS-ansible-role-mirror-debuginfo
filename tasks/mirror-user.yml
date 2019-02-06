@@ -1,0 +1,21 @@
+- name: Ensuring we have local unprivileged user owning mirror content
+  user:
+    name: "{{ debuginfo_local_user }}"
+    comment: "Local CentOS mirror user"
+    home: "/home/{{ debuginfo_local_user }}-home/"
+
+- name: Ensuring we have a place to store scripts (legacy compat)
+  file:
+    path: "/home/{{ debuginfo_local_user }}-scripts"
+    state: directory
+    owner: "{{ debuginfo_local_user }}"
+    group: "{{ debuginfo_local_user }}"
+
+- name: Ensuring we have a place to store mirror content
+  file:
+    path: "{{ debuginfo_local_path }}"
+    state: directory
+    owner: "{{ debuginfo_local_user }}"
+    group: "{{ debuginfo_local_user }}"
+    setype: user_home_dir_t
+    mode: 0755
