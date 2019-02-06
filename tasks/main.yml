@@ -28,7 +28,7 @@
 - name: Cron job to rsync content from upstream node
   cron:
     name: "CentOS Debuginfo mirror rsync job"
-    job: "/home/{{ debuginfo_local_user }}-scripts/rsync-master-debuginfo {{ debuginfo_rsync_from }} > /dev/null 2>&1"
+    job: "/home/{{ debuginfo_local_user }}-scripts/rsync-master-debug {{ debuginfo_rsync_from }} > /dev/null 2>&1"
     minute: "*/12"
     user: "{{ debuginfo_local_user }}"
 
