@@ -7,7 +7,7 @@ running="yes"
 
 do_rsync() {
 
-rsync --force --partial --exclude ".~tmp~"  --exclude FOOTER.html --delay-updates --delete -avzH $1::centos-full-debuginfo/ {{ debuginfo_local_path }}  > /home/centos-scripts/$SYNCTIME.debug.log 2>&1 
+rsync --force --partial --exclude ".~tmp~"  --delay-updates --delete -avzH $1::centos-full-debuginfo/ {{ debuginfo_local_path }}  > /home/centos-scripts/$SYNCTIME.debug.log 2>&1 
 
 for log in `ls *.debug.log `
   do
