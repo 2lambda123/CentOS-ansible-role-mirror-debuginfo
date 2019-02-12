@@ -3,8 +3,11 @@
 
 - name: Dropping the rsyncd snippet for mirror
   template:
-    src: 15_centos_full_debuginfo.conf.j2
-    dest: /etc/rsyncd.d/15_centos_full_debuginfo.conf
+    src: "{{ item }}.j2"
+    dest: "/etc/rsyncd.d/{{ item }}"
+  with_items:
+    - 14_centos_debuginfo.conf
+    - 15_centos_full_debuginfo.conf
   notify:
     - rebuild_rsyncd
 

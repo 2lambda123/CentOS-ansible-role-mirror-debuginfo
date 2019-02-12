@@ -1,0 +1,9 @@
+#centos-debuginfo
+[centos-debuginfo]
+       path = /home/centos-debuginfo 
+       comment = CentOS Debuginfo 
+       exclude = FOOTER.html HEADER_AD.html
+       list = no
+       hosts allow = {% for ip in debuginfo_rsyncd_allow_from %}{{ ip }} {% endfor %}  
+       hosts deny = * 
+
