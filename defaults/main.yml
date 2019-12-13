@@ -24,6 +24,20 @@ debuginfo_rsyncd_allow_from:
 # using mod_ratelimit on httpd to limit bw usage?
 debuginfo_httpd_mod_ratelimit: False
 debuginfo_httpd_rate_limit: 1536
+debuginfo_httpd_header: |
+  <div class="alert alert-danger" role="alert">
+  Due to lack of available bandwidth, we currently don't offer rsync to download/synchronize content from centos.org for debuginfo pkgs.<br> 
+  Also worth knowing that this mirror is running on limited available bandwidth too.
+  </div>
+  
+  <p>The Following external mirrors (not monitored by the CentOS Infra team !) provide direct downloads for debuginfo packages, through http and/or rsync:</p>
+  <ul>
+  <li><a href="http://mirror.facebook.net/centos-debuginfo/">http://mirror.facebook.net/centos-debuginfo/</a>
+  <li>rsync://mirror.facebook.net/centos-debuginfo/
+  <li><a href="http://linuxsoft.cern.ch/centos-debuginfo/">http://linuxsoft.cern.ch/centos-debuginfo/</a>
+  <li>rsync://linuxsoft.cern.ch/centos-debuginfo/
+  </ul>
+
 
 
 # Zabbix/monitoring part
