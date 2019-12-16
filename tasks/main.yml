@@ -11,7 +11,7 @@
     src: 80_debuginfo.conf.j2
     dest: /etc/httpd/conf.d/80_debuginfo.conf
   notify:
-    - restart_httpd
+    - reload_httpd
  
 - name: Ensuring some selinux booleans are enabled
   seboolean:
