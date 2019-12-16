@@ -4,8 +4,8 @@
      CustomLog logs/debuginfo.centos.org_access.log combined
      ErrorLog logs/debuginfo.centos.org_error.log
      DocumentRoot {{ debuginfo_local_path }}
-     ReadmeName /FOOTER.html
-     HeaderName /HEADER.html
+     HeaderName /centos-design/header-centos-debuginfo-mirror.html
+     ReadmeName /centos-design/footer.html
      IndexIgnore .??* *~ *# HEADER* README* RCS CVS *,v *,t FOOTER.html robots.txt
 
      Header always set X-Xss-Protection "1; mode=block"
@@ -37,7 +37,8 @@ LoadModule ratelimit_module modules/mod_ratelimit.so
       Allow from all
     </IfVersion>
     <IfVersion >= 2.4>
-      IndexOptions FancyIndexing VersionSort NameWidth=* HTMLTable Charset=UTF-8
+      IndexOptions NameWidth=*
+      IndexStyleSheet "/centos-design/css/centos-listindex.css"
       Require all granted
     </IfVersion>
  

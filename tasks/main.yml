@@ -2,13 +2,16 @@
 
 - import_role:
     name: httpd
+  vars:
+    - httpd_html_autoindex_title: "CentOS Debuginfo Mirror"
+    - httpd_html_autoindex_content: "{{ debuginfo_httpd_header }}" 
 
 - name: Adding vhost file
   template:
     src: 80_debuginfo.conf.j2
     dest: /etc/httpd/conf.d/80_debuginfo.conf
   notify:
-    - restart_httpd
+    - reload_httpd
  
 - name: Ensuring some selinux booleans are enabled
   seboolean:
