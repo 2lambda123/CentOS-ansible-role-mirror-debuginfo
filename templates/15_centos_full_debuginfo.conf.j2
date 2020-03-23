@@ -6,4 +6,11 @@
        list = no
        hosts allow = {% for host in groups['hostgroup-role-mirror-debuginfo'] %}{{ hostvars[host].ip }} {% if hostvars[host].ipv6 is defined %}{{ hostvars[host].ipv6 }} {% endif %}{% endfor %}{% for ip in debuginfo_rsyncd_allow_from %}{{ ip }} {% endfor %}  
        hosts deny = * 
+[centos-debuginfo]
+       path = /home/centos-debuginfo 
+       comment = The Full CentOS Debuginfo Master 
+       exclude = .~tmp~
+       list = no
+       hosts allow = {% for host in groups['hostgroup-role-mirror-debuginfo'] %}{{ hostvars[host].ip }} {% if hostvars[host].ipv6 is defined %}{{ hostvars[host].ipv6 }} {% endif %}{% endfor %}{% for ip in debuginfo_rsyncd_allow_from %}{{ ip }} {% endfor %}  
+       hosts deny = * 
 
