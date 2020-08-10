@@ -7,6 +7,8 @@
     dest: /etc/rsyncd.d/15_centos_full_debuginfo.conf
   notify:
     - rebuild_rsyncd
+  tags:
+    - template
 
 - name: Needed selinux booleans for rsyncd
   seboolean:
