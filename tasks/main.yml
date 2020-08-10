@@ -34,8 +34,13 @@
     job: "/home/{{ debuginfo_local_user }}-scripts/rsync-master-debug {{ debuginfo_rsync_from }} > /dev/null 2>&1"
     minute: "*/12"
     user: "{{ debuginfo_local_user }}"
+  tags:
+    - cron
 
 - include_tasks: rsyncd.yml
   when: debuginfo_rsyncd
+  tags:
+    - rsyncd
+    - template
 
 - include_tasks: monitoring.yml  
